@@ -19,9 +19,42 @@ public class CruddemoApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 //		return runner -> createStudent(studentDAO);
-//		return runner -> createMultipleStudents(studentDAO);
+		return runner -> createMultipleStudents(studentDAO);
 //		return runner -> readStudent(studentDAO);
-		return runner -> queryForStudents(studentDAO);
+//		return runner -> queryForStudents(studentDAO);
+//		return runner -> queryForStudentsByLastName(studentDAO);
+//		return runner -> updateStudent(studentDAO);
+//		return runner -> deleteStudent(studentDAO);
+//		return runner -> deleteAllStudents(studentDAO);
+	}
+
+	private void deleteAllStudents(StudentDAO studentDAO) {
+		studentDAO.deleteAll();
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		int id = 3003;
+		System.out.println("Deleting student id: " + id);
+		studentDAO.delete(id);
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+		int id = 2;
+		System.out.println("Getting student with id: " + id);
+		Student student = studentDAO.findById(id);
+		System.out.println(student);
+
+		System.out.println("Updating student...");
+		student.setFirstName("John");
+
+		studentDAO.update(student);
+		System.out.println(student);
+	}
+
+	private void queryForStudentsByLastName(StudentDAO studentDAO) {
+		List<Student> students = studentDAO.findByLastName("Knight");
+
+		students.forEach(System.out::println);
 	}
 
 	private void queryForStudents(StudentDAO studentDAO) {
@@ -57,9 +90,9 @@ public class CruddemoApplication {
 
 	private void createMultipleStudents(StudentDAO studentDAO) {
 		System.out.println("Creating 3 new student objects...");
-		Student tempStudent1 = new Student("JohnA", "DoeA", "JohnA@example.com");
-		Student tempStudent2 = new Student("JohnB", "DoeB", "JohnB@example.com");
-		Student tempStudent3 = new Student("JohnC", "DoeC", "JohnC@example.com");
+		Student tempStudent1 = new Student("John", "Doe", "john@example.com");
+		Student tempStudent2 = new Student("Jane", "Doe", "jane@example.com");
+		Student tempStudent3 = new Student("Joe", "Doe", "joe@example.com");
 
 		System.out.println("Saving 3 students...");
 		studentDAO.save(tempStudent1);
