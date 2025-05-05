@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public class StudentDAOImpl implements StudentDAO {
 
-    @Autowired
     private EntityManager entityManager;
-
+    
+    @Autowired
     public StudentDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
